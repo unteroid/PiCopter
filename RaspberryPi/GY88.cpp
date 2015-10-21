@@ -36,8 +36,8 @@ void class_GY88::initialize() {
 	checkConnection_();
 	setPWRMGMT1_(MPU6050_CLOCK_PLL_XGYRO);
 	setSampleFreq_(0);
-	setGyroSensivity_(MPU6050_GYRO_FS_500);
-	setAccelSensivity_(MPU6050_ACCEL_FS_8);
+	setGyroSensitivity_(MPU6050_GYRO_FS_500);
+	setAccelSensitivity_(MPU6050_ACCEL_FS_8);
 	enableByPassMode_();
 }
 
@@ -45,11 +45,11 @@ void class_GY88::setSampleFreq_(uint8_t value) {
 	I2CInterface.writeRegister(MPU6050_ADDRESS, MPU6050_RA_SMPLRT_DIV, 1, &value);
 }
 
-void class_GY88::setGyroSensivity_(uint8_t config) {
+void class_GY88::setGyroSensitivity_(uint8_t config) {
 	I2CInterface.writeRegister(MPU6050_ADDRESS, MPU6050_RA_GYRO_CONFIG, 1, &config);
 }
 
-void class_GY88::setAccelSensivity_(uint8_t config) {
+void class_GY88::setAccelSensitivity_(uint8_t config) {
 	I2CInterface.writeRegister(MPU6050_ADDRESS, MPU6050_RA_ACCEL_CONFIG, 1, &config);
 }
 

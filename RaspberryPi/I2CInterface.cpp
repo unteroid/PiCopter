@@ -2,12 +2,14 @@
 
 class_I2CInterface I2CInterface;
 
+//set path, open interface
 class_I2CInterface::class_I2CInterface()
 {
     strcpy(filename_, "/dev/i2c-1");
     openInterface();
 }
 
+//close interface
 class_I2CInterface::~class_I2CInterface()
 {
     close(f_);
