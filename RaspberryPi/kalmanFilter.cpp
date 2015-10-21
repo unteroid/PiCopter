@@ -4,9 +4,6 @@ class_kalmanFilter::class_kalmanFilter(){
 	Q_angle_ = 0.002;
 	Q_bias_ = 0;
 	R_angle_ = 180;
-
-
-
 	bias_ = 0;
 }
 
@@ -19,7 +16,6 @@ void class_kalmanFilter::predict(double* u, double* x, float* dt) {
 
 	//x = F * x + B * u
 	*x += (*u - bias_) * *dt;
-
 
 	//P = F * P * Ft + Q
 	P_[0][0] += -(P_[0][1] + P_[1][0]) * *dt + Q_angle_; // Can commit P_[1][1]*dt*dt due to very small influence
