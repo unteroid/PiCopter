@@ -12,8 +12,7 @@ class_Timer::class_Timer()
 	time_.tv_nsec = 0;
  }
 
-class_Timer::~class_Timer()
-{
+class_Timer::~class_Timer() {
 }
 
 void class_Timer::initialize() {

@@ -8,7 +8,8 @@
 #include "MPU6050RegMap.h"
 #include "rawData.h"
 
-class class_GY88 {
+class class_GY88 
+{
 public:
 	class_GY88();
 	virtual ~class_GY88();

@@ -6,8 +6,8 @@
 #include <cstdint>
 #include <unistd.h>
 
-struct struct_angles {
-
+struct struct_angles
+{
 	double roll_off;
 	double yaw_off;
 	double pitch_off;

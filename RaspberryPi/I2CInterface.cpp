@@ -41,7 +41,8 @@ void  class_I2CInterface::writeRegister(uint8_t deviceAddress, uint8_t registerA
     };
 }
 
-void class_I2CInterface::writeBit(uint8_t deviceAddress, uint8_t registerAddress, uint8_t bitNumber, uint8_t data) {
+void class_I2CInterface::writeBit(uint8_t deviceAddress, uint8_t registerAddress, uint8_t bitNumber, uint8_t data) 
+{
     uint8_t b;
     readRegister(deviceAddress, registerAddress, 1, &b);
     b = (data != 0) ? (b | (1 << bitNumber)) : (b & ~(1 << bitNumber));

@@ -16,8 +16,8 @@
 #include "operableData.h"
 #include "kalmanFilter.h"
 
-class class_AHRS {
-
+class class_AHRS 
+{
 public:
 	class_AHRS();
 	virtual ~class_AHRS();

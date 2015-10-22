@@ -8,8 +8,8 @@ class_GY88::class_GY88 () {
 class_GY88::~class_GY88() {
 }
 
-void class_GY88::getSensorData(struct_rawData* rawData) {
-
+void class_GY88::getSensorData(struct_rawData* rawData) 
+{
 	I2CInterface.readRegister(MPU6050_ADDRESS, MPU6050_RA_ACCEL_XOUT_H, 14, data_);
 	rawData->acc_x = static_cast<int16_t>((data_[0]<<8)|data_[1]);
 	rawData->acc_y = static_cast<int16_t>((data_[2]<<8)|data_[3]);
@@ -21,8 +21,8 @@ void class_GY88::getSensorData(struct_rawData* rawData) {
 	
 }
 
-void class_GY88::checkConnection_() {
-
+void class_GY88::checkConnection_() 
+{
 	I2CInterface.readRegister(MPU6050_ADDRESS, MPU6050_RA_WHO_AM_I, 1, data_);
 	if((uint8_t)data_[0] == 0x68) {
 		std::cout << "GY88 is connected" << std::endl;
@@ -31,7 +31,8 @@ void class_GY88::checkConnection_() {
 	}
 }
 
-void class_GY88::initialize() {
+void class_GY88::initialize() 
+{
 	uint8_t buf[25];
 	checkConnection_();
 	setPWRMGMT1_(MPU6050_CLOCK_PLL_XGYRO);

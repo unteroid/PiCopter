@@ -5,14 +5,17 @@ class_AHRS AHRS;
 const double pi = 3.141592653589793;
 const float a = 0.8; //low pass filtering constant
 
-class_AHRS::class_AHRS() {
+class_AHRS::class_AHRS() 
+{
 }
 
-class_AHRS::~class_AHRS(){ 
+class_AHRS::~class_AHRS()
+{ 
 }
 
 
-void class_AHRS::update() {
+void class_AHRS::update() 
+{
 	getRawData_();
 	convertRawToOperable_();
 	filterData_();
@@ -20,11 +23,13 @@ void class_AHRS::update() {
 	calibrateAngle();
 }
 
-void class_AHRS::getRawData_() {
+void class_AHRS::getRawData_() 
+{
 	GY88.getSensorData(&rawData_);
 }
 
-void class_AHRS::convertRawToOperable_() {
+void class_AHRS::convertRawToOperable_() 
+{
 	//devide by LSB to get actual value
 	operableData.gyr_x = rawData_.gyr_x/65.5;
 	operableData.gyr_y = rawData_.gyr_y/65.5;
@@ -36,13 +41,15 @@ void class_AHRS::convertRawToOperable_() {
 	operableData.acc_p = -1*(180/pi * atan(rawData_.acc_x / sqrt( pow(rawData_.acc_y, 2) + pow(rawData_.acc_z, 2) ))); // -1 * radian to degrees * atan... y axis
 }
 
-void class_AHRS::filterData_() {
+void class_AHRS::filterData_() 
+{
 	//exponential decay low-pass filter used to kill hardcore vibration noise
 	operableData.acc_q_f = (operableData.acc_q_f)* a + (1-a)*operableData.acc_q;
 	operableData.acc_q_f = (operableData.acc_q_f)* a + (1-a)*operableData.acc_q;
 }
 
-void class_AHRS::fuseData_() {
+void class_AHRS::fuseData_() 
+{
 	//complementary filter
 	//angles.roll =  (operableData.gyr_y_ang + operableData.gyr_y*Timer.dt)*a + (1-a)*operableData.acc_p;
 	//angles.pitch  =  (operableData.gyr_x_ang + operableData.gyr_x*Timer.dt)*a + (1-a)*operableData.acc_q;
@@ -53,12 +60,14 @@ void class_AHRS::fuseData_() {
 
 }
 
-void class_AHRS::calibrateAngle() {
+void class_AHRS::calibrateAngle() 
+{
 	//subtract MPU6050 offset error
 	angles.roll = angles.roll_off - roll_error;
 	angles.pitch = angles.pitch_off - pitch_error;
 }
 
-void class_AHRS::getAngleError() {
+void class_AHRS::getAngleError() 
+{
 	fprintf(stderr, "%1f %1f \n", roll_error, pitch_error);
 }

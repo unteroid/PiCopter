@@ -13,26 +13,35 @@ using namespace std;
 
 class_ArduinoUSB ArduinoUSB;
 
-class_ArduinoUSB::class_ArduinoUSB() {
+class_ArduinoUSB::class_ArduinoUSB() 
+{
 	strcpy(device_, "/dev/ttyACM0");
-	baud_ = 57600;
-//	myfile.open("usd.txt");	
+	baud_ = 230400;
 }
 
 class_ArduinoUSB::~class_ArduinoUSB() {
    close(f_);
 }
 
-void class_ArduinoUSB::connectArduino(){
-	if ((f_ = serialOpen ("/dev/ttyACM0", 230400)) < 0){
+void class_ArduinoUSB::connectArduino()
+{
+	if ((f_ = serialOpen (device_, baud_)) < 0)
+	{
 		std::cout << "USB ERROR: Failed to open Serial Bus at " << errno << std::endl;
-	    }
-	else if (wiringPiSetup () == -1) {
+	}
+	else if (wiringPiSetup () == -1) 
+	{
 		std::cout << "Wiring pi error " << std::endl;
 	}
-	else { std::cout << "Arduino is connected " <<std::endl;
-	while (serialDataAvail(f_)) { serialFlush(f_);}
-	usleep(1000000);}
+	else 
+	{ 
+		std::cout << "Arduino is connected " <<std::endl;
+		while (serialDataAvail(f_)) 
+		{ 
+			serialFlush(f_);
+		}
+		usleep(1000000);
+	}
 
 }
 
@@ -47,10 +56,6 @@ void class_ArduinoUSB::setPWM() {
 	make8_(&pwmWidths.rearRight, &sentBuff[3]);
 	make8_(&pwmWidths.frontLeft, &sentBuff[5]);
 	make8_(&pwmWidths.frontRight, &sentBuff[7]);
-//	sentBuff[1] = pwmWidths.rearLeft;
-//	sentBuff[2] = pwmWidths.rearRight;
-//	sentBuff[3] = pwmWidths.frontLeft;
-//	sentBuff[4] = pwmWidths.frontRight;
 	write(f_, sentBuff, 9);
 
 }
@@ -75,15 +80,11 @@ if (serialDataAvail(f_) > 3) {
 		receiverData.RCRoll =  ((static_cast<double>(receivedBuff[1]) - 50 )/100 * 20);
 		receiverData.RCPitch =  ((static_cast<double>(receivedBuff[2]) - 50)/100 * 20);
 		receiverData.RCYaw = (static_cast<double>(receivedBuff[3])  - 50)/100 * 100;
-//		printf("%d %d %d %d \n", receivedBuff[0], receivedBuff[1], receivedBuff[2], receivedBuff[3]);
-
 	} else {
 		read(f_, receivedBuff, z);
 	}
 
     }
-
-
 }
 
 
