@@ -2,16 +2,6 @@
 #include <TimerFour.h>
 #include <TimerThree.h>
 
-      /*
-      rearLeft = int(700 + float(receivedBuff[1])/200*1300);
-      if (rearLeft > 1300) rearLeft = 1300;
-      rearRight = int(700 + float(receivedBuff[2])/200*1300);
-      if (rearRight > 1300) rearRight = 1300;
-      frontLeft = int(700 + float(receivedBuff[3])/200*1300);
-      if (frontLeft > 1300) frontLeft = 1300;
-      frontRight = int(700 + float(receivedBuff[4])/200*1300);
-      if (frontRight > 1300) frontRight = 1300;
-      */
 #define RC_MIN 1150  
 #define RC_MAX 1850 
 #define RC_MID 1500 
@@ -53,9 +43,7 @@ void setup()
 
   Timer1.initialize(2500);
   Timer4.initialize(2500);
- // Timer3.initialize(20000);
-  //Timer3.attachInterrupt(rcReceive);
-
+  
   Timer1.pwm(11, 2000);
   Timer1.pwm(12, 2000);
   Timer4.pwm(7, 2000);
