@@ -1,16 +1,22 @@
 
 void riseRoll()        
 {
+    //timer for roll PPM is starting to count
     buffTime[0] = micros();
+    //rise is captured, detatching now
     detachInterrupt(2);
+    //attaching fall function
     attachInterrupt(2, fallRoll, FALLING); 
 }
  
 void fallRoll()        
 {  
+    //PPM length is calculated
     time[0] = micros() - buffTime[0];
     rcDeadZone(&time[0], &percentRoll);
+    //fall is captured, detatching
     detachInterrupt(2);
+    //attaching rise back
     attachInterrupt(2, riseRoll,RISING);
 }
   
