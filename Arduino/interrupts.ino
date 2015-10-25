@@ -46,10 +46,14 @@ void fallThrottle()
 {
     time[2] = micros() - buffTime[2];
     percentThrottle = (double)(time[2] - RC_MIN)/(RC_MAX - RC_MIN)*100;
-    if (percentThrottle < 0) {
+    if (percentThrottle < 0) 
+    {
       percentThrottle = 0; 
-    }else if (percentThrottle > 100 ){
-      percentThrottle = 100;};
+    }
+    else if (percentThrottle > 100 )
+    {
+      percentThrottle = 100;
+    }
     detachInterrupt(4);
     attachInterrupt(4, riseThrottle,RISING);
 } 
