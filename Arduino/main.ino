@@ -1,6 +1,6 @@
 #include <TimerOne.h>
 #include <TimerFour.h>
-#include <TimerThree.h>
+//#include <TimerThree.h>
   
 #define RC_MIN 1150  
 #define RC_MAX 1850 
@@ -87,7 +87,7 @@ void loop()
     Timer1.setPwm(11, frontLeft );
     Timer1.setPwm(12, frontRight );
   }
-  
+
    sentBuff[0] = (byte)percentThrottle;
    sentBuff[0] = sentBuff[0] | 128; // parrity bit 1000000
    sentBuff[1] = (byte)percentRoll;
