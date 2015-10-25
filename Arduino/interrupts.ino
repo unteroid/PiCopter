@@ -16,7 +16,7 @@ void fallRoll()
     rcDeadZone(&time[0], &percentRoll);
     //fall is captured, detatching
     detachInterrupt(2);
-    //attaching rise back
+    //attaching rise function back
     attachInterrupt(2, riseRoll,RISING);
 }
   
