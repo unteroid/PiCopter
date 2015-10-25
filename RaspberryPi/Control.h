@@ -19,7 +19,6 @@ public:
     void getRatePID();
     void setAttitudePID(float kp, float ki, float kd);
     void getAttitudePID();
-	void calibrate();
     class_PID ratePitchPID, rateRollPID, rateYawPID;
     class_PID attitudePitchPID, attitudeRollPID;
 	class_PID yawPID;
@@ -28,9 +27,7 @@ public:
 private:
     void updatePWM_( double* pitch, double* roll, double* yaw);
 	void antiSaturation_( uint16_t * target);
-	void toPercents_(uint16_t * target);
-  //  void evaluateAltitudeControl_();
-  //  void altitudeControl_();
+//	void toPercents_(uint16_t * target);
     void rateControl_(double* pitchrate, double* rollrate);
     void attitudeControl_();
 };
