@@ -1,7 +1,7 @@
 #include <TimerOne.h>
 #include <TimerFour.h>
 #include <TimerThree.h>
-
+  
 #define RC_MIN 1150  
 #define RC_MAX 1850 
 #define RC_MID 1500 
@@ -29,17 +29,17 @@ void setup()
   //Serial.begin(115200);
   pinMode(21, INPUT);     //set the pin to input
   digitalWrite(21, HIGH); //use the internal pullup resistor 
-  pinMode(20, INPUT);     //set the pin to input
-  digitalWrite(20, HIGH); //use the internal pullup resistor
-  pinMode(19, INPUT);     //set the pin to input
-  digitalWrite(19, HIGH); //use the internal pullup resistor
-  pinMode(18, INPUT);     //set the pin to input
-  digitalWrite(18, HIGH); //use the internal pullup resistor
+  pinMode(20, INPUT);     
+  digitalWrite(20, HIGH); 
+  pinMode(19, INPUT);     
+  digitalWrite(19, HIGH); 
+  pinMode(18, INPUT);    
+  digitalWrite(18, HIGH); 
 
-  attachInterrupt(2, riseRoll, RISING); // attach a PinChange Interrupt to our first pin
-  attachInterrupt(3, risePitch, RISING); // attach a PinChange Interrupt to our first pin
-  attachInterrupt(4, riseThrottle, RISING); // attach a PinChange Interrupt to our first pin
-  attachInterrupt(5, riseYaw, RISING); // attach a PinChange Interrupt to our first pin
+  attachInterrupt(2, riseRoll, RISING); // attach a PinChange Interrupt to 2 pin
+  attachInterrupt(3, risePitch, RISING); // attach a PinChange Interrupt to 3 pin
+  attachInterrupt(4, riseThrottle, RISING); // attach a PinChange Interrupt to 4 pin
+  attachInterrupt(5, riseYaw, RISING); // attach a PinChange Interrupt to 5 pin
 
   Timer1.initialize(2500);
   Timer4.initialize(2500);
