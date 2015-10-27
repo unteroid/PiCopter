@@ -1,1 +1,0 @@
-sudo g++ nova.cpp GY88.cpp Timer.cpp AHRS.cpp I2CInterface.cpp -o main -std=c++0x -lrt
