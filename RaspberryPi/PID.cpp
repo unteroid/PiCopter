@@ -37,8 +37,6 @@ void class_PID::calculate(double* position, double* setpoint, float* dt, double*
 {
 	prevError_ = error_;
 
-
-
     //Anti-windup algo
     if(((output >= 	uRange_) && (*setpoint >= *position)) || ((output <= -uRange_) && (*setpoint <= *position)))
         error_ = 0;
@@ -61,5 +59,4 @@ void class_PID::calculate(double* position, double* setpoint, float* dt, double*
     output = error_ * kp_ + integral_ * ki_ + derivative_ * kd_;
     if(output >= uRange_) output = uRange_;
     else if(output <= -uRange_) output = -uRange_;
-
 }
