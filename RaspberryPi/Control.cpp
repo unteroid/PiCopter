@@ -33,13 +33,13 @@ void class_Control::update()
 inline void class_Control::updatePWM_(double* pitch, double* roll, double* yaw) 
 {
 	ArduinoUSB.pwmWidths.frontLeft =  ((ArduinoUSB.receiverData.RCThrottle * (MOTOR_MAX - MOTOR_MIN)) + MOTOR_MIN)  + *roll + *pitch + *yaw;
-	antiSaturation_(&ArduinoUSB.pwmWidths.frontLeft);
+	saturation_(&ArduinoUSB.pwmWidths.frontLeft);
 	ArduinoUSB.pwmWidths.frontRight = ((ArduinoUSB.receiverData.RCThrottle * (MOTOR_MAX - MOTOR_MIN)) + MOTOR_MIN)  - *roll + *pitch - *yaw;
-	antiSaturation_(&ArduinoUSB.pwmWidths.frontRight);
+	saturation_(&ArduinoUSB.pwmWidths.frontRight);
 	ArduinoUSB.pwmWidths.rearRight = ((ArduinoUSB.receiverData.RCThrottle * (MOTOR_MAX - MOTOR_MIN)) + MOTOR_MIN) - *roll - *pitch + *yaw;
-	antiSaturation_(&ArduinoUSB.pwmWidths.rearRight);
+	saturation_(&ArduinoUSB.pwmWidths.rearRight);
 	ArduinoUSB.pwmWidths.rearLeft = ((ArduinoUSB.receiverData.RCThrottle * (MOTOR_MAX - MOTOR_MIN)) + MOTOR_MIN) + *roll - *pitch - *yaw;
-	antiSaturation_(&ArduinoUSB.pwmWidths.rearLeft);
+	saturation_(&ArduinoUSB.pwmWidths.rearLeft);
 
 	if (ArduinoUSB.receiverData.RCThrottle == 0) 
 	{
@@ -51,7 +51,7 @@ inline void class_Control::updatePWM_(double* pitch, double* roll, double* yaw)
 	ArduinoUSB.setPWM();
 }
 
-inline void class_Control::antiSaturation_(uint16_t * target) 
+inline void class_Control::saturation_(uint16_t * target) 
 {
 	if (*target > MOTOR_MAX) {
 		*target = MOTOR_MAX;
@@ -68,10 +68,9 @@ inline void class_Control::antiSaturation_(uint16_t * target)
 
 void class_Control::attitudeControl_() 
 {
-    attitudePitchPID.calculate(&AHRS.angles.pitch, &ArduinoUSB.receiverData.RCPitch, &Timer.dt, &AHRS.operableData.gyr_x);
-    attitudeRollPID.calculate(&AHRS.angles.roll, &ArduinoUSB.receiverData.RCRoll, &Timer.dt, &AHRS.operableData.gyr_y);
-    rateControl_(&attitudePitchPID.output, &attitudeRollPID.output);
-
+	attitudePitchPID.calculate(&AHRS.angles.pitch, &ArduinoUSB.receiverData.RCPitch, &Timer.dt, &AHRS.operableData.gyr_x);
+	attitudeRollPID.calculate(&AHRS.angles.roll, &ArduinoUSB.receiverData.RCRoll, &Timer.dt, &AHRS.operableData.gyr_y);
+	rateControl_(&attitudePitchPID.output, &attitudeRollPID.output);
 }
 
 void class_Control::rateControl_(double* pitchrate, double* rollrate) 

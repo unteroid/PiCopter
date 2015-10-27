@@ -26,7 +26,7 @@ public:
 
 private:
 	void updatePWM_( double* pitch, double* roll, double* yaw);
-	void antiSaturation_( uint16_t * target);
+	void saturation_( uint16_t * target);
 //	void toPercents_(uint16_t * target);
 	void rateControl_(double* pitchrate, double* rollrate);
 	void attitudeControl_();
