@@ -37,11 +37,11 @@ void class_PID::calculate(double* position, double* setpoint, float* dt, double*
 {
 	prevError_ = error_;
 
-    //Anti-windup algo
-    if(((output >= 	uRange_) && (*setpoint >= *position)) || ((output <= -uRange_) && (*setpoint <= *position)))
-        error_ = 0;
-    else if(((output >= uRange_) && (*setpoint <= *position)) || ((output <= -uRange_) && (*setpoint >= *position)))
-       error_ = *setpoint - *position;
+	//Anti-windup algo
+	if(((output >= 	uRange_) && (*setpoint >= *position)) || ((output <= -uRange_) && (*setpoint <= *position)))
+		error_ = 0;
+	else if(((output >= uRange_) && (*setpoint <= *position)) || ((output <= -uRange_) && (*setpoint >= *position)))
+		error_ = *setpoint - *position;
 
 	integral_ += error_ *  *dt;
 	integr_ = integral_ * ki_;
@@ -50,13 +50,14 @@ void class_PID::calculate(double* position, double* setpoint, float* dt, double*
 	if (derivativeSource != NULL)
 	   derivative_ = -1 * *derivativeSource; // derivative by measurement
 	else 
-    {
-    	derivativeRaw_ = (error_ - prevError_) / *dt;
-    	derivative_ = derivative_ * a + (1-a)*derivativeRaw_;
+	{
+    		derivativeRaw_ = (error_ - prevError_) / *dt;
+		derivative_ = derivative_ * a + (1-a)*derivativeRaw_;
 	}
 
-
-    output = error_ * kp_ + integral_ * ki_ + derivative_ * kd_;
-    if(output >= uRange_) output = uRange_;
-    else if(output <= -uRange_) output = -uRange_;
+	output = error_ * kp_ + integral_ * ki_ + derivative_ * kd_;
+	if(output >= uRange_) 
+		output = uRange_;
+	else if(output <= -uRange_) 
+		output = -uRange_;
 }
