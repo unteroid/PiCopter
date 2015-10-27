@@ -16,32 +16,29 @@ class_Control::~class_Control() {
 void class_Control::initialize() 
 {
 	//initialized later with command line interface. For now it's left with zeros
-    ratePitchPID.initialize(0, 0, 0, 0); 
-    rateRollPID.initialize(0, 0, 0, 0);
-    yawPID.initialize(0, 0, 0, 0);
-    attitudePitchPID.initialize(0, 0, 0, 0);
-    attitudeRollPID.initialize(0, 0, 0, 0);
+	ratePitchPID.initialize(0, 0, 0, 0); 
+	rateRollPID.initialize(0, 0, 0, 0);
+	yawPID.initialize(0, 0, 0, 0);
+	attitudePitchPID.initialize(0, 0, 0, 0);
+	attitudeRollPID.initialize(0, 0, 0, 0);
 }
-
 
 void class_Control::update() 
 {
 	ArduinoUSB.getReceiver();
 	attitudeControl_();
-
 }
-
 
 
 inline void class_Control::updatePWM_(double* pitch, double* roll, double* yaw) 
 {
-    ArduinoUSB.pwmWidths.frontLeft =  ((ArduinoUSB.receiverData.RCThrottle * (MOTOR_MAX - MOTOR_MIN)) + MOTOR_MIN)  + *roll + *pitch + *yaw;
+	ArduinoUSB.pwmWidths.frontLeft =  ((ArduinoUSB.receiverData.RCThrottle * (MOTOR_MAX - MOTOR_MIN)) + MOTOR_MIN)  + *roll + *pitch + *yaw;
 	antiSaturation_(&ArduinoUSB.pwmWidths.frontLeft);
-    ArduinoUSB.pwmWidths.frontRight = ((ArduinoUSB.receiverData.RCThrottle * (MOTOR_MAX - MOTOR_MIN)) + MOTOR_MIN)  - *roll + *pitch - *yaw;
+	ArduinoUSB.pwmWidths.frontRight = ((ArduinoUSB.receiverData.RCThrottle * (MOTOR_MAX - MOTOR_MIN)) + MOTOR_MIN)  - *roll + *pitch - *yaw;
 	antiSaturation_(&ArduinoUSB.pwmWidths.frontRight);
-    ArduinoUSB.pwmWidths.rearRight = ((ArduinoUSB.receiverData.RCThrottle * (MOTOR_MAX - MOTOR_MIN)) + MOTOR_MIN) - *roll - *pitch + *yaw;
+	ArduinoUSB.pwmWidths.rearRight = ((ArduinoUSB.receiverData.RCThrottle * (MOTOR_MAX - MOTOR_MIN)) + MOTOR_MIN) - *roll - *pitch + *yaw;
 	antiSaturation_(&ArduinoUSB.pwmWidths.rearRight);
-    ArduinoUSB.pwmWidths.rearLeft = ((ArduinoUSB.receiverData.RCThrottle * (MOTOR_MAX - MOTOR_MIN)) + MOTOR_MIN) + *roll - *pitch - *yaw;
+	ArduinoUSB.pwmWidths.rearLeft = ((ArduinoUSB.receiverData.RCThrottle * (MOTOR_MAX - MOTOR_MIN)) + MOTOR_MIN) + *roll - *pitch - *yaw;
 	antiSaturation_(&ArduinoUSB.pwmWidths.rearLeft);
 
 	if (ArduinoUSB.receiverData.RCThrottle == 0) 
@@ -51,7 +48,7 @@ inline void class_Control::updatePWM_(double* pitch, double* roll, double* yaw)
 		ArduinoUSB.pwmWidths.rearRight = 700;
 		ArduinoUSB.pwmWidths.rearLeft = 700;
 	}
-    ArduinoUSB.setPWM();
+	ArduinoUSB.setPWM();
 }
 
 inline void class_Control::antiSaturation_(uint16_t * target) 
@@ -80,28 +77,28 @@ void class_Control::attitudeControl_()
 void class_Control::rateControl_(double* pitchrate, double* rollrate) 
 {
 	yawPID.calculate(&AHRS.operableData.gyr_z, &ArduinoUSB.receiverData.RCYaw, &Timer.dt, NULL);
-    ratePitchPID.calculate(&AHRS.operableData.gyr_x, pitchrate, &Timer.dt, NULL);
-    rateRollPID.calculate(&AHRS.operableData.gyr_y, rollrate, &Timer.dt, NULL);
-    updatePWM_(&ratePitchPID.output, &rateRollPID.output, &yawPID.output);
+	ratePitchPID.calculate(&AHRS.operableData.gyr_x, pitchrate, &Timer.dt, NULL);
+	rateRollPID.calculate(&AHRS.operableData.gyr_y, rollrate, &Timer.dt, NULL);
+	updatePWM_(&ratePitchPID.output, &rateRollPID.output, &yawPID.output);
 }
 
 void class_Control::setRatePID(float KP, float KI, float KD, float KPY, float KIY) 
 {
-    ratePitchPID.setPID(KP, KI, KD);
-    rateRollPID.setPID(KP, KI, KD);
+	ratePitchPID.setPID(KP, KI, KD);
+	rateRollPID.setPID(KP, KI, KD);
 	float D = 0.0;
 	yawPID.setPID(KPY, KIY, D);
 }
 
 void class_Control::getRatePID() 
 {
-    ratePitchPID.getPID();
+	ratePitchPID.getPID();
 }
 
 void class_Control::setAttitudePID(float KP, float KI, float KD) 
 {
-    attitudePitchPID.setPID(KP, KI, KD);
-    attitudeRollPID.setPID(KP, KI, KD);
+	attitudePitchPID.setPID(KP, KI, KD);
+	attitudeRollPID.setPID(KP, KI, KD);
 }
 
 void class_Control::getAttitudePID() 
