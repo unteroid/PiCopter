@@ -103,6 +103,6 @@ void class_Control::setAttitudePID(float KP, float KI, float KD)
 
 void class_Control::getAttitudePID() 
 {
-    attitudePitchPID.getPID();
+	attitudePitchPID.getPID();
 }
 
