@@ -18,10 +18,11 @@ using namespace std;
 
 
 
-void* logger(void* file) {
-	for(;;) {
+void* logger(void* file) 
+{
+	for(;;) 
+	{
 		fprintf((FILE*)file,"xypq: %1f %1f %1f %1f \n", ArduinoUSB.receiverData.RCRoll, ArduinoUSB.receiverData.RCPitch, AHRS.angles.roll, AHRS.angles.pitch);
-		//fprintf((FILE*)file, "%1f \n", 1/Timer.dt);
 		usleep(2500);
 	}
 }
@@ -29,19 +30,17 @@ void* logger(void* file) {
 int main() {
 
 	//setting thread priority to realtime fifo
-
 	pthread_t mainThread = pthread_self();
 	struct sched_param params;
 	params.sched_priority = sched_get_priority_max(SCHED_FIFO);
 	pthread_setschedparam(mainThread,SCHED_FIFO, &params);
-//	pthread_setschedparam(thread_logger, SCHED_FIFO, &params);
 	int policy = 0;
 	int ret = pthread_getschedparam(mainThread, &policy, &params);
-	if  (ret != 0) fprintf(stderr, "SHED ERROR: sched is set wrong\n");
+	if  (ret != 0) 
+		fprintf(stderr, "SHED ERROR: sched is set wrong\n");
 
 	FILE *f;
 	f = fopen("output.txt", "w");
-
 	//initialize stuff
 	GY88.initialize();
 	Control.initialize();
@@ -54,17 +53,15 @@ int main() {
 	Control.setRatePID(k, i, d, ky, iy);
 	scanf(" %f, %f, %f", &k, &i, &d);
 	Control.setAttitudePID(k, i, d);
-//	Control.calibrate();
-//	usleep(1000000);
-	float dtSum = 0;
 
+	float dtSum = 0;
 	//waiting for 5 seconds for filter values to stabilize
 	fprintf(stderr, "wait for a moment for filter to stabilize \n");
-	while ( dtSum < 5 ) {
-	AHRS.update();
-	Timer.get_dt();
-	dtSum = Timer.dt + dtSum;
-//	fprintf(stderr, "%1f \n", Timer.dt);
+	while ( dtSum < 5 ) 
+	{
+		AHRS.update();
+		Timer.get_dt();
+		dtSum = Timer.dt + dtSum;
 	}
 
 	pthread_t thread_logger;
