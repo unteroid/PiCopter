@@ -78,13 +78,13 @@ void loop()
 			receivedBuff[k] = Serial.read();
 		}
 
-		rearLeft = makeword(receivedBuff[1], receivedBuff[2]);
+		rearLeft = makeword(receivedBuff[0], receivedBuff[1]);
 		 // if (rearLeft > 1400) rearLeft = 1400;
-		rearRight = makeword(receivedBuff[3], receivedBuff[4]);
+		rearRight = makeword(receivedBuff[2], receivedBuff[3]);
 		//	if (rearRight > 1400) rearRight = 1400;
-		frontLeft = makeword(receivedBuff[5], receivedBuff[6]);
+		frontLeft = makeword(receivedBuff[4], receivedBuff[5]);
 		 // if (frontLeft > 1400) frontLeft = 1400;
-		frontRight = makeword(receivedBuff[7], receivedBuff[8]);
+		frontRight = makeword(receivedBuff[6], receivedBuff[7]);
 		// if (frontRight > 1400) frontRight = 1400; 
 			
 		Timer4.setPwm(7, rearLeft );
