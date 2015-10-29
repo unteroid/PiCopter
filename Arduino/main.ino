@@ -57,6 +57,8 @@ void loop()
 	if(Serial.available() >= 8) 
 	{
 		z = 0;
+
+		receivedBuff[0] = Serial.read();
 		for (int k = 0; k <=7; k++)
 		{
 			receivedBuff[k+1] = Serial.read();
