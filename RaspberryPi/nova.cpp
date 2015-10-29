@@ -18,14 +18,7 @@ using namespace std;
 
 
 
-void* logger(void* file) 
-{
-	for(;;) 
-	{
-		fprintf((FILE*)file,"xypq: %1f %1f %1f %1f \n", ArduinoUSB.receiverData.RCRoll, ArduinoUSB.receiverData.RCPitch, AHRS.angles.roll, AHRS.angles.pitch);
-		usleep(2500);
-	}
-}
+void* logger(void* file);
 
 int main() {
 
@@ -65,8 +58,8 @@ int main() {
 	}
 
 	pthread_t thread_logger;
-//	ret = pthread_create(&thread_logger, NULL, logger, (void *)f);
-//	if (ret != 0) fprintf(stderr, "THREAD ERROR: can't create logger thread");
+	//ret = pthread_create(&thread_logger, NULL, logger, (void *)f);
+	//if (ret != 0) fprintf(stderr, "THREAD ERROR: can't create logger thread");
 
 
 	pthread_t thread_udpServer;
@@ -80,7 +73,8 @@ int main() {
 
 
 
-	for(;;) {
+	for(;;) 
+	{
 		AHRS.update();
 		Control.update();
 		Timer.get_dt();
@@ -88,4 +82,13 @@ int main() {
 
 
 	return 0;
+}
+
+void* logger(void* file) 
+{
+	for(;;) 
+	{
+		fprintf((FILE*)file,"xypq: %1f %1f %1f %1f \n", ArduinoUSB.receiverData.RCRoll, ArduinoUSB.receiverData.RCPitch, AHRS.angles.roll, AHRS.angles.pitch);
+		usleep(2500);
+	}
 }
