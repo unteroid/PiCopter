@@ -57,12 +57,12 @@ void loop()
 	if(Serial.available() >= 8) 
 	{
 		z = 0;
-
 		for (int k = 0; k <=7; k++)
 		{
 			receivedBuff[k+1] = Serial.read();
 			receivedWord = makeword(receivedBuff[k], receivedBuff[k+1]);
-			if ((receivedWord & 32768) == 32768) {
+			if ((receivedWord & 32768) == 32768) 
+			{
 				receivedBuff[0] = receivedBuff[k];
 				receivedBuff[1] = receivedBuff[k+1];
 				z = k;
