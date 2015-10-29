@@ -68,7 +68,7 @@ void loop()
 	if (z != 0) 
 		while(i = Serial.available() < 7);
 		
-	for(int k=1; k < 9; k++) 
+	for(int k=2; k < 9; k++) 
 	{
 		receivedBuff[k] = Serial.read();
 	}
