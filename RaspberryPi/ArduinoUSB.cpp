@@ -1,4 +1,4 @@
-
+ 
 #include "ArduinoUSB.h"
 
 #define RX_MAX 2000
@@ -47,15 +47,17 @@ void class_ArduinoUSB::connectArduino()
 
 
 
+
 void class_ArduinoUSB::setPWM() 
 {
-    uint8_t sentBuff[9];
-	sentBuff[0] = 220; //parrity byte
-	make8_(&pwmWidths.rearLeft, &sentBuff[1]);
-	make8_(&pwmWidths.rearRight, &sentBuff[3]);
-	make8_(&pwmWidths.frontLeft, &sentBuff[5]);
-	make8_(&pwmWidths.frontRight, &sentBuff[7]);
-	write(f_, sentBuff, 9);
+
+    uint8_t sentBuff[8];
+    *pwmWidths.rearLeft = *pwmWidths.rearLeft | 32768 //parrity bit 1000 0000 0000 0000
+	make8_(&pwmWidths.rearLeft, &sentBuff[0]);
+	make8_(&pwmWidths.rearRight, &sentBuff[2]);
+	make8_(&pwmWidths.frontLeft, &sentBuff[4]);
+	make8_(&pwmWidths.frontRight, &sentBuff[6]);
+	write(f_, sentBuff, 8);
 }
 
 

@@ -13,6 +13,7 @@ word makeword(byte H, byte L) {
 
 word rearLeft, rearRight, frontLeft, frontRight;
 byte receivedBuff[10];
+word receivedWord;
 byte sentBuff[4];
 byte exsentBuff[4];
 int time[4];
@@ -53,39 +54,43 @@ void setup()
 void loop()
 {
 	
-	if(i = Serial.available() > 8) 
+	if(Serial.available() >= 8) 
 	{
-	z = 0;
-	for(int k=0; k < 9; k++) 
-	{
-		if( Serial.read() == 220) 
-		{
-		z = k;
-		break;
-		}
-	}
-	
-	if (z != 0) 
-		while(i = Serial.available() < 7);
-		
-	for(int k=2; k < 9; k++) 
-	{
-		receivedBuff[k] = Serial.read();
-	}
+		z = 0;
 
-	rearLeft = makeword(receivedBuff[1], receivedBuff[2]);
-	 // if (rearLeft > 1400) rearLeft = 1400;
-	rearRight = makeword(receivedBuff[3], receivedBuff[4]);
-	//	if (rearRight > 1400) rearRight = 1400;
-	frontLeft = makeword(receivedBuff[5], receivedBuff[6]);
-	 // if (frontLeft > 1400) frontLeft = 1400;
-	frontRight = makeword(receivedBuff[7], receivedBuff[8]);
-	// if (frontRight > 1400) frontRight = 1400; 
-		
-	Timer4.setPwm(7, rearLeft );
-	Timer4.setPwm(6, rearRight );
-	Timer1.setPwm(11, frontLeft );
-	Timer1.setPwm(12, frontRight );
+		for (int k = 0; k <=7; k++)
+		{
+			receivedBuff[k+1] = Serial.read();
+			receivedWord = makeword(receivedBuff[k], receivedBuff[k+1]);
+			if ((receivedWord & 32768) == 32768) {
+				receivedBuff[0] = receivedBuff[k];
+				receivedBuff[1] = receivedBuff[k+1];
+				z = k;
+				break;
+			}
+		}
+
+		if (z != 0) 
+			while(Serial.available() <= 6);
+			
+		for(int k = 2; k <= 7; k++) 
+		{
+			receivedBuff[k] = Serial.read();
+		}
+
+		rearLeft = makeword(receivedBuff[1], receivedBuff[2]);
+		 // if (rearLeft > 1400) rearLeft = 1400;
+		rearRight = makeword(receivedBuff[3], receivedBuff[4]);
+		//	if (rearRight > 1400) rearRight = 1400;
+		frontLeft = makeword(receivedBuff[5], receivedBuff[6]);
+		 // if (frontLeft > 1400) frontLeft = 1400;
+		frontRight = makeword(receivedBuff[7], receivedBuff[8]);
+		// if (frontRight > 1400) frontRight = 1400; 
+			
+		Timer4.setPwm(7, rearLeft );
+		Timer4.setPwm(6, rearRight );
+		Timer1.setPwm(11, frontLeft );
+		Timer1.setPwm(12, frontRight );
 	}
 
 	sentBuff[0] = (byte)percentThrottle;
