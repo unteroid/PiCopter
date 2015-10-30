@@ -1,5 +1,5 @@
 # PiCopter
-Arduino + Raspberry PI based AHRS for a quadcopter
+Arduino + Raspberry PI based AHRS for a quadcopter (teensy or other board can be used as well)
 
 This project is based on Matthew Watson's PiCopter software. 
 I've done some modifications to improve project's stability and to expand functionality.
