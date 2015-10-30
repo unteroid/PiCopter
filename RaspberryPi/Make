@@ -1,0 +1,2 @@
+﻿all:
+	sudo g++ nova.cpp GY88.cpp ArduinoUSB.cpp Control.cpp PID.cpp Timer.cpp AHRS.cpp I2CInterface.cpp udpServer.cpp Interface.cpp -o nova -std=c++0x -lrt -lwiringPi -DRaspberryPi -lpthread

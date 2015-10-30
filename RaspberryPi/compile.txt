@@ -1,1 +1,1 @@
-sudo g++ nova.cpp GY88.cpp ArduinoUSB.cpp Control.cpp PID.cpp Timer.cpp AHRS.cpp I2CInterface.cpp -o main -std=c++0x -lrt -lwiringPi -DRaspberryPi
+sudo g++ nova.cpp GY88.cpp ArduinoUSB.cpp Control.cpp PID.cpp Timer.cpp AHRS.cpp I2CInterface.cpp -o main -std=c++0x -lrt -lwiringPi -DRaspberryPi -lpthread
